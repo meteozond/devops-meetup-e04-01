@@ -11,9 +11,10 @@ jobs:
     runs-on: team-01
     steps:
       - uses: actions/checkout@v7
+      - uses: azure/setup-helm@v4
       - run: |
           IMG=ghcr.io/${GITHUB_REPOSITORY,,}/front
           echo ${{ github.token }} | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
           docker build -t "$IMG:$GITHUB_SHA" front
           docker push "$IMG:$GITHUB_SHA"
-          helm upgrade --install front front/chart -n front --set image.repository="$IMG" --set image.tag="$GITHUB_SHA"
+          helm upgrade --install front front/chart -n front --create-namespace --set image.repository="$IMG" --set image.tag="$GITHUB_SHA"
