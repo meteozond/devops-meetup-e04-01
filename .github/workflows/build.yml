@@ -9,7 +9,7 @@ permissions:
 jobs:
   build:
     environment: Default
-    runs-on: ubuntu-latest
+    runs-on: team-01
     steps:
       - uses: actions/checkout@v7
       - env:
